@@ -7,10 +7,10 @@ import pandas as pd
 import json
 import numpy as np
 from zipfile import ZipFile
-from api import key
+# from api import key
 
 # Initialize OpenAI client
-client = OpenAI(api_key=key)
+client = OpenAI(api_key="sk-proj-GCY1vQ2eC1IdQCxBEGPsT3BlbkFJsohYG72GIcdmZq2BkYpI")
 
 # Function to read PDF content
 def read_pdf(file_path):
