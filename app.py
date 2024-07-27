@@ -37,7 +37,7 @@ def run_gpt_task(instructions, prompt):
             {"role": "system", "content": instructions},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=1
+        max_tokens=4000
     )
     return response.choices[0].message.content
 
