@@ -486,23 +486,33 @@ def main():
                         
                         # Store the file paths for download
                         file_dict[file_to_offer] = os.path.join(root, file_to_offer)
-            st.success("Select a file from the dropdown menu to download!")
-            # Create a dropdown menu for file selection
-            selected_file = st.selectbox("Select a file to download", options=list(file_dict.keys()))
-
-            if selected_file:
-                file_path = file_dict[selected_file]
-                with open(file_path, "rb") as f:
-                    st.download_button(
-                        label=f"Download {selected_file}",
-                        data=f,
-                        file_name=selected_file
-                    )
-
             
+            if file_dict:
+                st.success("Select a file from the dropdown menu to download!")
+                # Create a dropdown menu for file selection
+                selected_file = st.selectbox("Select a file to download", options=list(file_dict.keys()))
 
+                if selected_file:
+                    file_path = file_dict[selected_file]
+                    with open(file_path, "rb") as f:
+                        st.download_button(
+                            label=f"Download {selected_file}",
+                            data=f,
+                            file_name=selected_file
+                        )
+                    
+                    # Upload button to re-upload the downloaded file
+                    uploaded_file = st.file_uploader("Re-upload the downloaded file (CSV or PDF)", type=["csv", "pdf", "txt"], key="tab6_file_uploader")
+                    if uploaded_file:
+                        new_file_path = os.path.join("processed", f"{uploaded_file.name}")
+                        with open(new_file_path, "wb") as f:
+                            f.write(uploaded_file.getbuffer())
+                        st.success(f"File {uploaded_file.name} has been re-uploaded and saved as {new_file_path}")
+            else:
+                st.warning("No files found for the specified company.")
         else:
             st.error("Please specify the company name in the first tab.")
+
 def login():
     st.title("Login")
     username = st.text_input("Username")
